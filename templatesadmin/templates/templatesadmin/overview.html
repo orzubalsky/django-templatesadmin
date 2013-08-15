@@ -4,10 +4,11 @@
 {% load templatesadmin_tags %}
 
 {% block breadcrumbs %}
-<div class="breadcrumbs">
-    <a href="{% url 'templatesadmin-overview' %}">{% trans "Home" %}</a> &rsaquo;
+<ul class="grp-horizontal-list">
+    <li><a href="{% url '../' %}">{% trans "Home" %}</a></li>
+    <li><a href="{% url 'templatesadmin-overview' %}">{% trans "File selection" %}</a></li>
     {% trans "File selection" %}
-</div>
+</ul>
 {% endblock %}
 
 {% block title %}Templatesadmin Overview{% endblock %}

@@ -26,11 +26,11 @@
 {% endblock %}
 
 {% block breadcrumbs %}
-<div class="breadcrumbs">
-    <a href="{% url 'templatesadmin-overview' %}">{% trans "Home" %}</a> &rsaquo;
-    <a href="{% url 'templatesadmin-overview' %}">{% trans "File selection" %}</a> &rsaquo;
-    {{ template_path }}
-</div>
+<ul class="grp-horizontal-list">
+    <li><a href="{% url '../../' %}">{% trans "Home" %}</a></li>
+    <li><a href="{% url 'templatesadmin-overview' %}">{% trans "File selection" %}</a></li>
+    <li>{{ template_path }}</li>
+</ul>
 {% endblock %}
 
 {% block title %}
