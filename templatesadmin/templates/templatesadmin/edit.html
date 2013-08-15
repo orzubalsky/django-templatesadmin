@@ -10,6 +10,7 @@
 
 {% block extrastyle %}
     {{ block.super }}
+    {{form.media}}    
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/forms.css" />
     <style type="text/css">
         textarea#id_content{
@@ -20,7 +21,6 @@
         }
 
     </style>
-    {{form.media}}
 {% endblock %}
 
 {% block breadcrumbs %}
