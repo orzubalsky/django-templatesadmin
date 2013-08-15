@@ -1,6 +1,6 @@
 from django import forms
+from django_ace import AceWidget
+
 
 class TemplateForm(forms.Form):
-    content = forms.CharField(
-        widget=forms.Textarea()
-    )
+    content = forms.CharField(widget=AceWidget(mode='html', theme='twilight'))
