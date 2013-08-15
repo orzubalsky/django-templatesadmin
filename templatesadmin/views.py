@@ -86,11 +86,15 @@ TEMPLATESADMIN_TEMPLATE_DIRS = [
 
 
 def user_in_templatesadmin_group(user):
-    try:
-        user.groups.get(name=TEMPLATESADMIN_GROUP)
+    if user.is_staff:
         return True
-    except ObjectDoesNotExist:
+    else:
         return False
+    # try:
+    #     user.groups.get(name=TEMPLATESADMIN_GROUP)
+    #     return True
+    # except ObjectDoesNotExist:
+    #     return False
 
 
 @never_cache
@@ -101,7 +105,6 @@ def listing(
     template_name='templatesadmin/overview.html',
     available_template_dirs=TEMPLATESADMIN_TEMPLATE_DIRS
 ):
-
     template_dict = []
     for templatedir in available_template_dirs:
         for root, dirs, files in os.walk(templatedir):
@@ -118,7 +121,6 @@ def listing(
                         os.stat(full_path)[ST_CTIME]),
                     'writeable': os.access(full_path, os.W_OK)
                 }
-
                 # Do not fetch non-writeable templates if settings set.
                 if (TEMPLATESADMIN_HIDE_READONLY is True and
                     l['writeable'] is True) or \
@@ -128,8 +130,17 @@ def listing(
                     except KeyError:
                         template_dict = (l,)
 
+    if request.user.is_superuser:
+        branch_template_dict = []
+        for branch in request.user.branches_organized.all():
+            for template in template_dict:
+                if branch.slug in template["abspath"]:
+                    branch_template_dict.append(template)
+    else:
+        branch_template_dict = template_dict
+
     template_context = {
-        'template_dict': template_dict,
+        'template_dict': branch_template_dict,
         'ADMIN_MEDIA_PREFIX': settings.ADMIN_MEDIA_PREFIX,
     }
 
