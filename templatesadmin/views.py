@@ -131,13 +131,13 @@ def listing(
                         template_dict = (l,)
 
     if request.user.is_superuser:
+        branch_template_dict = template_dict
+    else:
         branch_template_dict = []
         for branch in request.user.branches_organized.all():
             for template in template_dict:
                 if branch.slug in template["abspath"]:
                     branch_template_dict.append(template)
-    else:
-        branch_template_dict = template_dict
 
     template_context = {
         'template_dict': branch_template_dict,
